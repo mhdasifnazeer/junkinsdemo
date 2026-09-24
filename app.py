@@ -6,5 +6,5 @@ app = Flask(__name__)
 def home():
     return "Hello from Flask Jenkins!"
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     app.run()
