@@ -6,19 +6,18 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'master',
-                    url: 'https://github.com/mhdasifnazeer/junkinsdemo.git'
+                    url: 'https://github.com/mhdasifnazeer/jenkinsdemo.git'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Setup & Test') {
             steps {
-                sh 'python3 -m pip install -r requirements.txt'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'python3 -m pytest'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                    pytest
+                '''
             }
         }
     }
