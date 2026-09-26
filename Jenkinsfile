@@ -3,21 +3,23 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Install Dependencies') {
             steps {
-                git branch: 'master',
-                    url: 'https://github.com/mhdasifnazeer/jenkinsdemo.git'
+                bat 'pip install -r requirements.txt'
             }
         }
 
-        stage('Setup & Test') {
+        stage('Test') {
             steps {
-                sh '''
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip install -r requirements.txt
-                    pytest
-                '''
+                bat 'pytest'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'mkdir build'
+                bat 'copy app.py build\\'
+                bat 'copy requirements.txt build\\'
             }
         }
     }
